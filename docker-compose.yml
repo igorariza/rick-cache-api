@@ -1,0 +1,31 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: database
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: admin
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_ROOT_HOST: '%'
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - rick-cache-api
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - rick-cache-api
+
+
+volumes:
+  mysql-data:
+
+networks:
+  rick-cache-api:
+    driver: bridge

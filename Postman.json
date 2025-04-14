@@ -1,0 +1,58 @@
+{
+    "info": {
+        "name": "Rick and Morty API",
+        "description": "Postman collection for interacting with the Rick and Morty API.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "GraphQL Query",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"query\": \"query { characters(status: \\\"Alive\\\", species: \\\"Human\\\") { id name status species gender origin { name } } }\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:4000/graphql",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "4000",
+                    "path": [
+                        "graphql"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Run Cron Job",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:4000/cronjob/run",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "4000",
+                    "path": [
+                        "cronjob",
+                        "run"
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}

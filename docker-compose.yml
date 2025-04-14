@@ -1,4 +1,25 @@
 services:
+
+  rick-cache-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rick-cache-api
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=admin
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - db
+      - redis
+    networks:
+      - rick-cache-api
   db:
     image: mysql:8.0
     container_name: database

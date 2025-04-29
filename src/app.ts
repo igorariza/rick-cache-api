@@ -26,6 +26,7 @@ app.post('/cronjob/run', async (req: Request, res: Response) => {
   }
 });
 
+// Function to run database migrations
 const runMigration = async (): Promise<void> => {
   return new Promise((resolve, reject) => {
     exec('/bin/bash ./entry.sh', (error, stdout, stderr) => {
@@ -45,15 +46,19 @@ const runMigration = async (): Promise<void> => {
 
 (async () => {
   try {
+    // Connect to the database
     await connectDatabase();
     console.log('Database connected successfully');
 
-    await initializeRedis();
-    console.log('Redis connected successfully');
-
+    // Run migrations after database connection
     await runMigration();
     console.log('Migration process completed successfully');
 
+    // Initialize Redis
+    await initializeRedis();
+    console.log('Redis connected successfully');
+
+    // Set up Apollo Server
     const server = new ApolloServer({
       typeDefs,
       resolvers,
@@ -61,9 +66,13 @@ const runMigration = async (): Promise<void> => {
     });
 
     await server.start();
-    //server.applyMiddleware({ app });
+    //server.applyMiddleware({ app }); // Attach Apollo Server to the Express app
     console.log(`Apollo Server ready at http://localhost:${PORT}${server.graphqlPath}`);
+
+    // Add GraphQL Playground middleware
     app.get('/graphql', playground({ endpoint: '/graphql' }));
+
+    // Start the Express server
     app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT}`);
     });

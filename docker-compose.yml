@@ -21,7 +21,7 @@ services:
     networks:
       - rick-cache-api
   db:
-    image: mysql:8.0
+    image: mysql:8.0.20
     container_name: database
     restart: always
     ports:

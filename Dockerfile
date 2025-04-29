@@ -1,5 +1,7 @@
 FROM node:18-alpine
 
+
+RUN apk add --no-cache bash jq mysql-client
 WORKDIR /usr/src/app
 
 COPY package*.json ./
